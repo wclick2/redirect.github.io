@@ -1,12 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; URL='https://target-url.com'" />
-    <title>Redirecting...</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .spinner-container, .success-container {
+      display: none;
+    }
+
+    .spinner-container.active, .success-container.active {
+      display: block;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #ffa41c;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    .checkmark-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .checkmark {
+      width: 52px;
+      height: 52px;
+    }
+
+    .checkmark-circle {
+      stroke: #ffa41c;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+    }
+
+    .checkmark-check {
+      stroke: #ffa41c;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: dash 0.5s ease-out forwards;
+    }
+
+    @keyframes dash {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .success-text {
+      font-size: 1rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="https://target-url.com">click here</a>.</p>
+  <div class="container">
+    <div class="spinner-container" id="spinner-container">
+      <div class="spinner"></div>
+      <p class="loading-text">Redirecting you to the page...</p>
+    </div>
+    <div class="success-container" id="success-container">
+      <div class="checkmark-container">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <p class="success-text">Success! Redirecting now...</p>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const spinnerContainer = document.getElementById("spinner-container");
+      const successContainer = document.getElementById("success-container");
+
+      // Show spinner on load
+      spinnerContainer.classList.add("active");
+
+      // Simulate loading for 3 seconds
+      setTimeout(() => {
+        spinnerContainer.classList.remove("active");
+        successContainer.classList.add("active");
+
+        // Redirect after showing success
+        setTimeout(() => {
+          window.location.href = "https://amazon.com"; // Replace with your target URL
+        }, 2000);
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
